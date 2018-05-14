@@ -22,8 +22,6 @@
   (function(window, document, Chartist) {
     "use strict";
 
-    var startId = 0;
-
     var publicOptions = {
       onMouseEnter: () => null,
       onMouseLeave: () => null,
@@ -40,11 +38,10 @@
        * @param Chart chart
        */
       return function hover(chart) {
-        startId++;
-
         var triggerSelector = getTriggerSelector();
         var hoverClass = getDefaultTriggerClass() + "--hover";
         var pointValues = getPointValues();
+        var hoveredElement = null;
 
         init();
 
@@ -67,7 +64,9 @@
                   "." + chart.options.classNames.point + "--hover"
                 );
 
-                options.onMouseLeave(e);
+                hoveredElement = null;
+
+                options.onMouseLeave(pointElement);
               });
             });
 
@@ -143,7 +142,72 @@
             return;
           }
 
-          options.onMouseEnter(pointElement);
+          if (hoveredElement === pointElement) {
+            return;
+          }
+
+          if (hoveredElement) {
+            options.onMouseLeave(hoveredElement);
+          }
+
+          hoveredElement = pointElement;
+
+          const seriesName = pointElement.parentNode.getAttribute(
+            "ct:series-name"
+          );
+
+          const seriesGroups = Array.prototype.slice.call(
+            pointElement.parentNode.parentNode.children
+          );
+
+          const seriesIndex = options.dataDrawnReversed
+            ? seriesGroups.reverse().indexOf(pointElement.parentNode)
+            : seriesGroups.indexOf(pointElement.parentNode);
+
+          const valueGroup = Array.prototype.slice.call(
+            pointElement.parentNode.querySelectorAll(
+              "." + getDefaultTriggerClass()
+            )
+          );
+
+          const valueIndex = valueGroup.indexOf(pointElement);
+
+          // clone the series array
+          let seriesData = chart.data.series.slice(0);
+
+          seriesData = chart.options.reverseData
+            ? seriesData.reverse()[seriesIndex]
+            : seriesData[seriesIndex];
+
+          seriesData =
+            !Array.isArray(seriesData) &&
+            typeof seriesData == "object" &&
+            seriesData.data
+              ? seriesData.data
+              : seriesData;
+
+          if (!seriesData) {
+            return;
+          }
+
+          const itemData =
+            !Array.isArray(seriesData) && typeof seriesData == "object"
+              ? seriesData
+              : seriesData[valueIndex];
+
+          if (itemData == null) {
+            return;
+          }
+
+          options.onMouseEnter(
+            pointElement,
+            itemData.value
+              ? {
+                  meta: itemData.meta,
+                  value: itemData.value
+                }
+              : itemData
+          );
         }
 
         /**
