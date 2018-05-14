@@ -36,8 +36,6 @@ var chart = new Chartist.Line(
       Chartist.plugins.hover({
         onMouseEnter: () => null,
         onMouseLeave: () => null,
-        dataDrawnReversed: false,
-        triggerSelector: null,
         id: null
       })
     ]

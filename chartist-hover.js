@@ -15,7 +15,7 @@
   }
 })(typeof self !== "undefined" ? self : this, function(Chartist) {
   /**
-   * Chartist.js plugin to display a tooltip on top of a chart.
+   * Chartist plugin that adds a hover event to each point, slice or bar on your chart.
    * @author Pier-Luc Gendreau
    * @version 1.0 14 May 2018
    */
@@ -27,12 +27,7 @@
     var publicOptions = {
       onMouseEnter: () => null,
       onMouseLeave: () => null,
-      // If you choose to reverse the original order of the chart elements in
-      // the DOM, you must set this to true
-      dataDrawnReversed: false,
-      // only if a custom element is used for the trigger (TODO: test)
-      triggerSelector: null,
-      id: null
+      triggerSelector: null
     };
 
     Chartist.plugins = Chartist.plugins || {};
@@ -41,15 +36,12 @@
       options = Chartist.extend({}, publicOptions, options);
 
       /**
-       * Chartist tooltip plugin
+       * Chartist hover plugin
        * @param Chart chart
        */
-      return function tooltip(chart) {
+      return function hover(chart) {
         startId++;
 
-        // simple unique id for the tooltip element (needed to be able to
-        // add aria-describedby to the trigger while the tooltip is visible)
-        options.id = "charttooltip-" + startId;
         var triggerSelector = getTriggerSelector();
         var hoverClass = getDefaultTriggerClass() + "--hover";
         var pointValues = getPointValues();
@@ -57,15 +49,12 @@
         init();
 
         /**
-         * Initialize the tooltip
+         * Initialize the hover events
          */
         function init() {
           if (!chart.container) {
             return;
           }
-
-          // set attribute on the container, so external scripts can detect the tooltip element
-          chart.container.setAttribute("data-charttooltip-id", options.id);
 
           // Offer support for multiple series line charts
           if (chart instanceof Chartist.Line) {
