@@ -201,7 +201,7 @@
 
           options.onMouseEnter(
             pointElement,
-            itemData.value
+            itemData.hasOwnProperty("value")
               ? {
                   meta: itemData.meta,
                   value: itemData.value
