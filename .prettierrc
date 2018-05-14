@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": "package.json",
+      "options": {
+        "printWidth": 100000
+      }
+    }
+  ]
+}
