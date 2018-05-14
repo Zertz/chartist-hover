@@ -1,0 +1,19 @@
+{
+  "name": "chartist-hover",
+  "version": "1.0.0",
+  "description": "Chartist plugin that adds a hover event to each point, slice or bar on your chart.",
+  "main": "chartist-hover.js",
+  "repository": "https://github.com/Zertz/chartist-hover.git",
+  "author": "Pier-Luc Gendreau",
+  "license": "MIT",
+  "keywords": [
+    "chartist",
+    "chartist-plugin",
+    "chartist-hover",
+    "plugin",
+    "hover"
+  ],
+  "devDependencies": {
+    "prettier": "^1.12.1"
+  }
+}
