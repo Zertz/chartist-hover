@@ -1,12 +1,18 @@
 {
   "name": "chartist-hover",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Chartist plugin that adds a hover event to each point, slice or bar on your chart.",
   "main": "chartist-hover.js",
   "repository": "https://github.com/Zertz/chartist-hover.git",
   "author": "Pier-Luc Gendreau",
   "license": "MIT",
-  "keywords": ["chartist", "chartist-plugin", "chartist-hover", "plugin", "hover"],
+  "keywords": [
+    "chartist",
+    "chartist-plugin",
+    "chartist-hover",
+    "plugin",
+    "hover"
+  ],
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
