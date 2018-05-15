@@ -66,7 +66,9 @@
 
                 hoveredElement = null;
 
-                options.onMouseLeave(pointElement);
+                options.onMouseLeave(
+                  Object.assign({}, e, { target: pointElement })
+                );
               });
             });
 
@@ -147,7 +149,9 @@
           }
 
           if (hoveredElement) {
-            options.onMouseLeave(hoveredElement);
+            options.onMouseLeave(
+              Object.assign({}, e, { target: hoveredElement })
+            );
           }
 
           hoveredElement = pointElement;
