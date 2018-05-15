@@ -200,7 +200,9 @@
           }
 
           options.onMouseEnter(
-            pointElement,
+            Object.assign(e, {
+              target: pointElement
+            }),
             itemData.hasOwnProperty("value")
               ? {
                   meta: itemData.meta,
