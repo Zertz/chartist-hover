@@ -39,7 +39,6 @@
        */
       return function hover(chart) {
         var triggerSelector = getTriggerSelector();
-        var hoverClass = getDefaultTriggerClass() + "--hover";
         var pointValues = getPointValues();
         var hoveredElement = null;
 
@@ -60,15 +59,11 @@
                 .querySelector("svg")
                 .addEventListener("mousemove", prepareLineTooltip);
               chart.container.addEventListener("mouseleave", function(e) {
-                var pointElement = chart.container.querySelector(
-                  "." + chart.options.classNames.point + "--hover"
+                options.onMouseLeave(
+                  Object.assign({}, e, { target: hoveredElement })
                 );
 
                 hoveredElement = null;
-
-                options.onMouseLeave(
-                  Object.assign({}, e, { target: pointElement })
-                );
               });
             });
 
@@ -140,11 +135,7 @@
             );
           }
 
-          if (!pointElement || matches(pointElement, "." + hoverClass)) {
-            return;
-          }
-
-          if (hoveredElement === pointElement) {
+          if (!pointElement || hoveredElement === pointElement) {
             return;
           }
 
