@@ -59,6 +59,10 @@
                 .querySelector("svg")
                 .addEventListener("mousemove", prepareLineTooltip);
               chart.container.addEventListener("mouseleave", function(e) {
+                if (!hoveredElement) {
+                  return;
+                }
+
                 options.onMouseLeave(
                   Object.assign({}, e, { target: hoveredElement })
                 );
@@ -86,6 +90,10 @@
          * @param Event e
          */
         function prepareLineTooltip(e) {
+          if (pointValues.length === 0) {
+            return;
+          }
+
           var boxData = this.getBoundingClientRect();
           var currentXPosition =
             e.pageX -
@@ -249,6 +257,10 @@
 
           chart.on("draw", function(data) {
             if (data.type == "point") {
+              if (data.index === 0) {
+                pointValues.splice(0);
+              }
+
               pointValues.push(data.x);
             }
           });
